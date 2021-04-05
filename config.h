@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Gohu Gohufont:pixelsize=14";
+static char *font = "Fira Code:pixelsize=19:antialias=true:autohint=true";
 static int borderpx = 0;
 
 /*
@@ -65,7 +65,7 @@ static unsigned int blinktimeout = 800;
 /*
  * thickness of underline and bar cursors
  */
-static unsigned int cursorthickness = 1;
+static unsigned int cursorthickness = 2;
 
 /*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
@@ -99,30 +99,31 @@ float alpha = 0.8;
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
-	"#313131", 	// black
-	"#CB1A2F",	// red
-	"#00958E",	// green
-	"#b4774b",	// yellow
-	"#355D80",	// blue
-	"#5C5491",	// magenta
-	"#1FB4D1",	// cyan
-	"#F4E0C8",	// white
+  [0] = "#272822", /* black   */
+  [1] = "#f92672", /* red     */
+  [2] = "#a6e22e", /* green   */
+  [3] = "#f4bf75", /* yellow  */
+  [4] = "#66d9ef", /* blue    */
+  [5] = "#ae81ff", /* magenta */
+  [6] = "#a1efe4", /* cyan    */
+  [7] = "#f8f8f2", /* white   */
 
 	/* 8 bright colors */
-	"#4A4A4A", 	// black
-	"#AC75C4",	// red
-	"#53AA9C",	// green
-	"#C89364",	// yellow
-	"#FF70FF",	// blue (actually pink lol)
-	"#D810C8",	// magenta (actually purplish lol)
-	"#FFAFFF",	// cyan (actually light light pink lol)
-	"#D7D8D9",	// white
+  [8]  = "#75715e", /* black   */
+  [9]  = "#f92672", /* red     */
+  [10] = "#a6e22e", /* green   */
+  [11] = "#f4bf75", /* yellow  */
+  [12] = "#66d9ef", /* blue    */
+  [13] = "#ae81ff", /* magenta */
+  [14] = "#a1efe4", /* cyan    */
+  [15] = "#f9f8f5", /* white   */
 
 	[255] = 0,
 
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#cccccc",	// foreground
-	"#121212",	// background
+  [256] = "#272822", /* background */
+  [257] = "#f8f8f2", /* foreground */
+	"black",
 };
 
 
@@ -130,9 +131,9 @@ static const char *colorname[] = {
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-unsigned int defaultfg = 256;
-unsigned int defaultbg = 257;
-static unsigned int defaultcs = 1;
+unsigned int defaultfg = 7;
+unsigned int defaultbg = 258;
+static unsigned int defaultcs = 257;
 static unsigned int defaultrcs = 257;
 
 /*
@@ -177,11 +178,14 @@ static uint forcemousemod = ShiftMask;
  */
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
-	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
+	{ XK_ANY_MOD,           Button2, clippaste,      {.i = 0},      1 },
+	{ 0,		            Button4, kscrollup,      {.i = 1} },
+	{ 0,        		    Button5, kscrolldown,    {.i = 1} },
 	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
 	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
 	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
 	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
+
 };
 
 /* Internal keyboard shortcuts. */
@@ -202,8 +206,6 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
-	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 };
 
 /*

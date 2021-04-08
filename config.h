@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Fira Code:pixelsize=19:antialias=true:autohint=true";
+static char *font = "Hack:pixelsize=15:antialias=true:autohint=true";
 static int borderpx = 0;
 
 /*
@@ -103,7 +103,7 @@ static const char *colorname[] = {
   [1] = "#f92672", /* red     */
   [2] = "#a6e22e", /* green   */
   [3] = "#f4bf75", /* yellow  */
-  [4] = "#66d9ef", /* blue    */
+  [4] = "#8bb4bc", /* blue    */
   [5] = "#ae81ff", /* magenta */
   [6] = "#a1efe4", /* cyan    */
   [7] = "#f8f8f2", /* white   */
@@ -113,7 +113,7 @@ static const char *colorname[] = {
   [9]  = "#f92672", /* red     */
   [10] = "#a6e22e", /* green   */
   [11] = "#f4bf75", /* yellow  */
-  [12] = "#66d9ef", /* blue    */
+  [12] = "#8bb4bc", /* blue    */
   [13] = "#ae81ff", /* magenta */
   [14] = "#a1efe4", /* cyan    */
   [15] = "#f9f8f5", /* white   */
@@ -197,6 +197,8 @@ static Shortcut shortcuts[] = {
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
+	{ ShiftMask,            XK_Prior,       kscrollup,      {.i = -1} },
+	{ ShiftMask,            XK_Next,        kscrolldown,    {.i = -1} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
 	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
 	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
